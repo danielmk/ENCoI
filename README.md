@@ -1,7 +1,5 @@
 # ENCoI
-A method to Estimate Neuronal Conductances by Impedance measurement. 
-
-This is a Placeholder repository. Code coming soon.
+A method to Estimate Neuronal Conductances by Impedance measurement.
 
 # Authors
 Ilan Lampl - [Weizmann Institute of Science](https://www.weizmann.ac.il/neurobiology/labs/lampl/home)
