@@ -26,8 +26,8 @@ jitter_std = 10  # jitter of stimulation in ms std
 vrest = -65.0  # reversal potential of leak and initialization voltage
 vrs = 10.0  # access resistance 50.0 for gm and 1.0 for voltage clamp
 amp_curr = 1.0  # peak to peak amplitude of injected current (nA)
-freq_curr_one = 410  # frequency of injected current
-freq_curr_two = 587
+freq_curr_one = 210  # frequency of injected current
+freq_curr_two = 315
 cp = 0.0  # Pipette capacitance
 g_leak_scale = 1
 syn_ts = np.arange(t_stim, t_stim+1000, 100)
@@ -54,10 +54,10 @@ vi = -75.0  # reversal potential of inhibition
 """SIMULATION PARAMETERS"""
 dt = 0.01  #  sampling interval 
 tstop = 2000+t_stim  # duration of the simulation
-clamp = 'sece'  # measurement paradigm: 'sece', 'seci', 'gm'
+clamp = 'gm'  # measurement paradigm: 'sece', 'seci', 'gm'
 # type of synaptic input:
 # 'distal', 'intermediate', 'proximal', 'somatic', 'mixed'
-inp = 'distal'
+inp = 'mixed'
 dlambda = 'on'  # dlambda doesn't seem to be doing anything even for distal
 dendrites = 'on'
 
@@ -296,13 +296,13 @@ if clamp=='gm':
     pg = pi_rec
 
 hyperparams = dict([('seed', seed),
-                    ('n_syne', n_syne),
-                    ('n_syni', n_syni),
+                    ('n_syne', n_syn_e),
+                    ('n_syni', n_syn_i),
                     ('t_stim', t_stim),
                     ('gsyn_e', gsyn_e),
                     ('gsyn_i', gsyn_i),
                     ('jitter_std', jitter_std),
-                    ('dt', n_syni),
+                    ('dt', dt),
                     ('vrest', vrest),
                     ('ve', ve),
                     ('vi', vi),

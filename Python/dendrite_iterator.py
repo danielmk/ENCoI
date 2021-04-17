@@ -28,10 +28,10 @@ tstop = 2500+t_stim  # duration of the simulation
 vrest = -65.0  # reversal potential of leak and initialization voltage
 vrs = 10.0  # access resistance 50.0 for gm and 1.0 for voltage clamp
 amp_curr = 1.0  # peak to peak amplitude of injected current (nA)
-freq_curr_one = 410  # frequency of injected current
-freq_curr_two = 587
+freq_curr_one = 210  # frequency of injected current
+freq_curr_two = 315
 cp = 0.0  # Pipette capacitance
-g_leak_scale = 1e-1
+g_leak_scale = 1
 
 """SYNAPTIC PARAMETERS"""
 ei_delay = 4  # in ms

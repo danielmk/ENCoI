@@ -2,9 +2,9 @@
 % ISOLATE ge AND gi FROM MULTIPLE DENDRITIC DISTANCES
 cd(fileparts(which(mfilename)));
 
-gm = load('data\final_distances\gm_baseline.mat');
-sece = load('data\final_distances\sece_baseline.mat');
-seci = load('data\final_distances\seci_baseline.mat');
+gm = load('data\gm_baseline_low_freq.mat');
+sece = load('data\sece_baseline_low_freq.mat');
+seci = load('data\seci_baseline_low_freq.mat');
 
 FILTP = [20 0.0001 3 0.92];
 searchtime = [0.3 0.6];
