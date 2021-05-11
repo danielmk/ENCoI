@@ -1,0 +1,39 @@
+cd(fileparts(which(mfilename)));
+
+%% LOAD SIMULATION OF PROXIMAL SYNAPSES
+% Proximal synapses 129.92um +- 47.83std
+% gm: impedance technique; sece: ge vc technique; seci: gi vc technique
+gm_dend = load('.\data\intrinsics\gm_10.0_210_315_on_10_1620729184.107247_dend.mat');
+cc_dend = load('.\data\intrinsics\cc_10.0_210_315_on_10_1620727052.1003478_dend.mat');
+gm_nodend = load('.\data\intrinsics\gm_10.0_210_315_on_10_1620731057.2182198_nodend.mat');
+cc_nodend = load('.\data\intrinsics\cc_10.0_210_315_on_10_1620731231.3828201_nodend.mat');
+
+%% ISOLATE CONDUCTANCES 
+FILTP = [20 0.0001 3 0.92];
+searchtime = [0.3 0.6];
+[ge,gi,VC,gl,re,GT_dend,Zt,cmm,ff,ff2,g1,g2,z1,z2] = ...
+                                      find_gegi(gm_dend.V(1:end-1),...
+                                      gm_dend.ac*1e-9,...
+                                      1/gm_dend.dt,...
+                                      [-65 0 0],...
+                                      searchtime,...
+                                      'FILTP', FILTP);
+[ge,gi,VC,gl,re,GT_nodend,Zt,cmm,ff,ff2,g1,g2,z1,z2] = ...
+                                      find_gegi(gm_nodend.V(1:end-1),...
+                                      gm_dend.ac*1e-9,...
+                                      1/gm_dend.dt,...
+                                      [-65 0 0],...
+                                      searchtime,...
+                                      'FILTP', FILTP);
+%% Calculate input resistance from step current injection
+step_voltage_amp = max(cc_dend.V) - min(cc_dend.V);
+step_input_resistance_dend = (step_voltage_amp / 1) *1e9; %1 nA current injection. in Ohm
+sine_input_resistance_dend = 1 / mean(GT_dend(1e5:2e5));
+
+step_voltage_amp = max(cc_nodend.V) - min(cc_nodend.V);
+step_input_resistance_nodend = (step_voltage_amp / 1) *1e9; %1 nA current injection. in Ohm
+sine_input_resistance_nodend = 1 / mean(GT_nodend(1e5:2e5));
+
+
+%% PRINT FIGURE
+print(gcf, '-dpdf', 'figure7_matlab_out.pdf')
