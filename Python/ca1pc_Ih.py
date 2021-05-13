@@ -59,7 +59,7 @@ tstop = 2000+t_stim  # duration of the simulation
 clamp = 'gm'  # measurement paradigm: 'sece', 'seci', 'gm'
 # type of synaptic input:
 # 'distal', 'intermediate', 'proximal', 'somatic', 'mixed'
-inp = 'somatic'
+inp = 'proximal'
 dlambda = 'on'  # dlambda doesn't seem to be doing anything even for distal
 dendrites = 'on'
 
@@ -339,7 +339,8 @@ if clamp=='gm':
                 'ac': ac,
                 'hyperparams': hyperparams,
                 'total_ge': np.array(ge_recs).sum(axis=0)*1e-6,
-                'total_gi': np.array(gi_recs).sum(axis=0)*1e-6}
+                'total_gi': np.array(gi_recs).sum(axis=0)*1e-6,
+                'htc_ghbar': htc_ghbar}
     scipy.io.savemat(fname+".mat", mat_dict)
 
 if clamp=='sece' or clamp=='seci':
@@ -353,7 +354,8 @@ if clamp=='sece' or clamp=='seci':
             'ac': ac,
             'hyperparams': hyperparams,
             'total_ge': np.array(ge_recs).sum(axis=0)*1e-6,
-            'total_gi': np.array(gi_recs).sum(axis=0)*1e-6}
+            'total_gi': np.array(gi_recs).sum(axis=0)*1e-6,
+            'htc_ghbar': htc_ghbar}
     scipy.io.savemat(fname+".mat", mat_dict)
 
 distance_recalc = []

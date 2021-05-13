@@ -20,7 +20,6 @@ h.nrn_load_dll(filename)
 
 """PARAMETERS"""
 seed = 10
-t_stim = 800  # time_point of the stimulation
 jitter_std = 10  # jitter of stimulation in ms std
 vrest = -65.0  # reversal potential of leak and initialization voltage
 vrs = 10.0  # access resistance 50.0 for gm and 1.0 for voltage clamp
@@ -29,15 +28,18 @@ freq_curr_one = 210  # frequency of injected current
 freq_curr_two = 315
 cp = 0.0  # Pipette capacitance
 g_leak_scale = 1
+htc_ghbar = 0.00005  # Ih parameter
+htc_eh = -47
 
 """SIMULATION PARAMETERS"""
 dt = 0.01  #  sampling interval 
-tstop = 2000+t_stim  # duration of the simulation
+tstop = 700  # duration of the simulation
 clamp = 'cc'  # measurement paradigm: 'gm', 'cc'
 # type of synaptic input:
 # 'distal', 'intermediate', 'proximal', 'somatic', 'mixed'
 dlambda = 'on'  # dlambda doesn't seem to be doing anything even for distal
-dendrites = 'off'
+dendrites = 'on'
+Ih = 'on'
 
 # Detach dendrites from soma if dendrites = 'off'
 if dendrites == 'off':
@@ -53,6 +55,16 @@ else:
 for d in h.d:
     d(0.5).pas.g = d(0.5).pas.g * g_leak_scale
 soma(0.5).pas.g = soma(0.5).pas.g * g_leak_scale
+
+if Ih == 'on':
+    # Add Ih
+    soma.insert('htc')
+    soma(0.5).htc.ghbar = htc_ghbar
+    soma(0.5).htc.eh = htc_eh
+    for d in h.d:
+        d.insert('htc')
+        d(0.5).htc.ghbar = htc_ghbar
+        d(0.5).htc.eh = htc_eh
 
 # Setup the sinusoidal current injection
 fs=np.round(1/(dt/1000))
@@ -90,7 +102,7 @@ if clamp == 'cc':
     p = h.IClamp(acc_r(1.0))
     p.delay=100
     p.dur = 500
-    p.amp = -1
+    p.amp = -0.7
     pi_rec = h.Vector()
     pi_rec.record(acc_r(1.0)._ref_v)
 elif clamp == 'gm':
