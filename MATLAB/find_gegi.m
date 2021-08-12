@@ -146,31 +146,11 @@ Zt = Zt*1;
 
 NewExact3 = 1; %Dec 14 2020
 if NewExact3% solving based on absolute value:
-    %%Solve[Abs (r + 1/(g + I*w1*c)) == Abs (z1) && Abs (r + 1/(g + I*w2*c)) == Abs (z2), {r, g}]
-    g1 = [];
-    g2 = [];
-    z1 = hilbVf1./hilbIf1;
-    z2 = hilbVf2./hilbIf2;
-    boostcehere = 0;
-    if boostcehere; %correcting for electrode capac.
-        zz1 = z1(1000:end-1000);
-        zz2 = z2(1000:end-1000);
-        global estce ce
-        estce  = mean((1./abs(zz1)-1./abs(zz2))./(2*pi*(ff-ff2)));
-        gt1 = (1./z1);
-        gt2 = (1./z2);
-        % estce = ce;
-        gc1 = gt1-1i*estce*2*pi*ff;
-        gc2 = gt2-1i*estce*2*pi*ff2;
-        z1 = 1./gc1;
-        z2 = 1./gc2;
-    end
-    
     %z2 = z2*1.0;
     %z2 = z2-mean(z1);
     w1 = 2*pi*ff;
     w2 = 2*pi*ff2;
-    Gtotal = getGtotal(p, w1, w2, z1, z2)
+    Gtotal = getGtotal(p, w1, w2, z1, z2, hilbVf1, hilbIf1, hilbVf2, hilbIf2)
 end
 re = Rs_meas;
 %%% Dec 2020 4 components
