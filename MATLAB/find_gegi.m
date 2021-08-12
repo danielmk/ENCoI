@@ -170,13 +170,7 @@ if NewExact3% solving based on absolute value:
     %z2 = z2-mean(z1);
     w1 = 2*pi*ff;
     w2 = 2*pi*ff2;
-    z1a = (z1);
-    z2a = (z2);
-    Rs_meas = (1/(2*(1i*p.c*w1 - 1i*p.c*w2)))*(1i*p.c*w1*z1a - 1i*p.c*w2*z1a + 1i*p.c*w1*z2a -...
-        1i*p.c*w2*z2a + ((-1i*p.c*w1*z1a + 1i*p.c*w2*z1a - 1i*p.c*w1*z2a + 1i*p.c*w2*z2a).^2 -...
-        4*(1i*p.c*w1 - 1i*p.c*w2)*(z1a - z2a + 1i*p.c*w1*z1a.*z2a - 1i*p.c*w2*z1a.*z2a)).^0.5);
-    Gtotal = 1./(z1-Rs_meas)-1i*p.c*w1;
-    Gtotal = ((1i*(1i + p.c*Rs_meas*w1 - p.c*w1*z1a))./(Rs_meas - z1a));
+    Gtotal = getGtotal(p, w1, w2, z1, z2)
 end
 re = Rs_meas;
 %%% Dec 2020 4 components
